@@ -45,12 +45,6 @@ jobs:
           cd frontend
           yarn lint
 
-      ## Build frontend Artifact ##
-      - name: Build frontend
-        run: |
-          cd frontend
-          yarn build
-
   ## DEPLOY FRONTEND ##
   Deploy-Frontend:
     runs-on: ubuntu-latest
@@ -59,6 +53,12 @@ jobs:
       ## Load the source code ##
       - name: Checkout the code
         uses: actions/checkout@v4
+
+        ## Build frontend Artifact ##
+      - name: Build frontend
+        run: |
+          cd frontend
+          yarn build
 
         ## Deploy to S3 ##
       - name: Deploy to S3
