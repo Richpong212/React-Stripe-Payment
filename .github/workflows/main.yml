@@ -12,20 +12,35 @@ on:
     branches:
       - main # Set a branch to watch for changes
 
-jobs: # Define the jobs that will run in the pipeline.
+jobs:
   frontend-CI:
-    runs-on: ubuntu-latest # Set the operating system to Ubuntu
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout the code # load the code from the repository
-        uses: actions/checkout@v4 # Use the checkout action
+      ## Load the source code ##
+      - name: Checkout the code
+        uses: actions/checkout@v4
 
-      - name: Setup node # Set up node.js
-        uses: actions/setup-node@v4 # Use the setup-node action
+      ## Setup Node.js ##
+      - name: Setup node
+        uses: actions/setup-node@v4
         with:
-          node-version: "20" # Set the node version to your desired project version
+          node-version: "20"
 
-      - name: Install dependencies # Install the dependencies
+      ## Install dependencies ##
+      - name: Install dependencies
         run: |
           npm install -g yarn
           cd frontend
           yarn install
+
+      ## Run tests ##
+      - name: Run tests
+        run: |
+          cd frontend
+          yarn test
+
+      ## Code Quality ##
+      - name: Code Quality
+        run: |
+          cd frontend
+          yarn lint
