@@ -1,0 +1,31 @@
+name: Stripe Payments CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main # Set a branch to watch for changes
+    paths:
+      - "backend/**"
+      - "frontend/**"
+      - ".github/workflows/main.yml"
+  pull_request:
+    branches:
+      - main # Set a branch to watch for changes
+
+jobs: # Define the jobs that will run in the pipeline.
+  frontend-CI:
+    runs-on: ubuntu-latest # Set the operating system to Ubuntu
+    steps:
+      - name: Checkout the code # load the code from the repository
+        uses: actions/checkout@v4 # Use the checkout action
+
+      - name: Setup node # Set up node.js
+        uses: actions/setup-node@v4 # Use the setup-node action
+        with:
+          node-version: "20" # Set the node version to your desired project version
+
+      - name: Install dependencies # Install the dependencies
+        run: |
+          npm install -g yarn
+          cd frontend
+          yarn install
