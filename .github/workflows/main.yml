@@ -58,6 +58,7 @@ jobs:
       - name: Build frontend
         run: |
           cd frontend
+          yarn cache clean
           yarn build
 
         ## Deploy to S3 ##
