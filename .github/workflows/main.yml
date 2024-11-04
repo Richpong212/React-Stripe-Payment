@@ -75,6 +75,12 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: "us-east-1"
 
-      - run: |
-          cd frontend
-          aws s3 sync build s3://$AWS_S3_BUCKET --region us-east-1
+        ## Deploy to S3 ##
+      - name: Deploy to S3
+        uses: jakejarvis/s3-sync-action@v0.5.3
+        with:
+          args: --acl public-read --delete
+        env:
+          AWS_S3_BUCKET: ${{ secrets.S3_BUCKET }}
+          AWS_REGION: "us-east-1"
+          SOURCE_DIR: "frontend/build"
